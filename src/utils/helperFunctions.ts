@@ -9,7 +9,7 @@
 
 const sleep = (seconds:number)=>{
     const secondsToMiliseconds = 1000;
-    
+
     return new Promise((resolve:any)=>{
         setTimeout(
             ()=>{
@@ -19,4 +19,4 @@ const sleep = (seconds:number)=>{
     })
 }
 
-export {sleep}
+export {sleep} 
