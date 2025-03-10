@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Mi Extensión",
+    "version": "1.0",
+    "description": "Descripción de mi extensión.",
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["contentScript.js"],
+        "type": "module"
+      }
+    ]
+  }
