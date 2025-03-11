@@ -1,9 +1,13 @@
-import { sleep } from './utils/helperFunctions';
+import { getItems } from './utils/tailoy';
 
-(
-    async () => {
-        console.log('Esperando 2 segundos...');
-        await sleep(2);
-        console.log('Han pasado 2 segundos');
-    }
-)()
+console.log('Estoy en contentScript 2.0')
+
+chrome.runtime.onConnect.addListener(function(port){
+    port.onMessage.addListener(async ({cmd})=>{
+        console.log(cmd)
+        if(cmd == "getItems"){
+            const data = await getItems()
+            port.postMessage({success:true,message:"Items obtenidos",data})
+        }
+    } )
+})
