@@ -1,4 +1,5 @@
 import { getPortActiveTab } from './utils/helperFunctions'
+import { getProductCode } from './utils/openai'
 
 
 ( ()=>{
@@ -75,58 +76,59 @@ import { getPortActiveTab } from './utils/helperFunctions'
     document?.getElementById('imageForm')?.addEventListener('submit', function(event) {
         event.preventDefault();
     
-        const fileInput = document.getElementById('imageInput') as HTMLInputElement;;
-        if (! fileInput?.files) return
-        const file = fileInput?.files[0];
-    
-        if (!file) {
-            alert('Por favor, selecciona una imagen.');
-            return;
+        const btnUpload = document.getElementById('buttonUpload') as HTMLButtonElement;
+        btnUpload.disabled = true;
+
+        try{
+            const fileInput = document.getElementById('imageInput') as HTMLInputElement;;
+            if (! fileInput?.files) return
+            const file = fileInput?.files[0];
+        
+            if (!file) {
+                alert('Por favor, selecciona una imagen.');
+                btnUpload.disabled = false;
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = async ()=> {
+                try{
+                    if (!(typeof reader.result === 'string')) return
+                    const apiKey = (document.getElementById('txtAPI') as HTMLInputElement)?.value
+                    const base64Image = reader.result?.split(',')[1];
+            
+                    const result = await getProductCode(apiKey, base64Image)
+        
+                    const elementResponse = document.getElementById('response')
+        
+                    if (!elementResponse) return
+        
+                    
+        
+                    elementResponse.innerText = JSON.stringify(result)
+
+                    const btnUpload = document.getElementById('buttonUpload') as HTMLButtonElement;
+                    btnUpload.disabled = false;
+
+                }
+                catch(e:any){
+                    alert(e.message)
+                    const btnUpload = document.getElementById('buttonUpload') as HTMLButtonElement;
+                    btnUpload.disabled = false;
+                }
+                
+            }
+
+            reader.readAsDataURL(file);
         }
+        catch(e){
+            const btnUpload = document.getElementById('buttonUpload') as HTMLButtonElement;
+            btnUpload.disabled = false;
+        }
+        
     
-        const reader = new FileReader();
-        reader.onload = async function() {
-            if (!(typeof reader.result === 'string')) return
-            const apiKey = (document.getElementById('txtAPI') as HTMLInputElement)?.value
-            const base64Image = reader.result?.split(',')[1];
-            const url = 'https://api.openai.com/v1/images/analysis';
-    
-           
-            const body = JSON.stringify({
-                model: 'gpt-4o',
-                response_format: { type: 'json_object' },
-                messages: [
-                  {
-                    role: 'user',
-                    content: [
-                      { type: 'text', text: 'Extrae el product code del siguiente documento. devuelvelo en formato JSON' },
-                      { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}` } }
-                    ]
-                  }
-                ]
-              });
-    
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body
-            });
-    
-            const result = await response.json();
-
-            const elementResponse = document.getElementById('response')
-
-            if (!elementResponse) return
-
-            const productCodeResult = JSON.parse(result.choices[0].message.content);
-
-            console.log(productCodeResult)
-            elementResponse.innerText = result.choices[0].message.content
-        };
-        reader.readAsDataURL(file);
+        
+       
+        
     });
 
 }
