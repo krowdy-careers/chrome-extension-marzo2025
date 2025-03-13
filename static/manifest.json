@@ -9,5 +9,8 @@
         "js": ["contentScript.js"],
         "type": "module"
       }
-    ]
+    ],
+    "action": {
+    "default_popup": "popup.html"
+    }
   }
