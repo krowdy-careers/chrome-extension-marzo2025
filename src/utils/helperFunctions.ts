@@ -19,4 +19,35 @@ const sleep = (seconds:number)=>{
     })
 }
 
-export {sleep} 
+const getPortActiveTab = async ()=>{
+    const [tab] = await chrome.tabs.query({ active: true })
+    if(!tab.id) return
+    const portTab = chrome.tabs.connect(tab.id, { name: "content-script-port" })
+    return portTab
+}
+
+const saveObjectInLocalStorage = async function (obj:any) {
+    return new Promise((resolve, reject) => {
+      try {
+        chrome.storage.local.set(obj, function () {
+          resolve(obj);
+        });
+      } catch (ex) {
+        reject(ex);
+      }
+    });
+  };
+  
+  const getObjectInLocalStorage = async function (key:any) {
+    return new Promise((resolve, reject) => {
+      try {
+        chrome.storage.local.get([key], function (value) {
+          resolve(value);
+        });
+      } catch (ex) {
+        reject(ex);
+      }
+    });
+  };
+
+export {sleep,getPortActiveTab,getObjectInLocalStorage,saveObjectInLocalStorage} 
