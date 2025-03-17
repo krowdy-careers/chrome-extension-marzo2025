@@ -1,6 +1,10 @@
 import { getItems } from './utils/wong';
 
 console.log('Estoy en contentScript 2.0')
+const scrollToBottom = () => {
+    window.scrollBy({ top: window.innerHeight * 9, behavior: 'smooth' });
+    console.log("Scroll 📜");
+}
 //auto click en el boton show more hasta que muestre todos items
 const buttonShowMore = async (): Promise<HTMLElement | null> => {
 
@@ -22,12 +26,13 @@ const buttonShowMore = async (): Promise<HTMLElement | null> => {
 const loadTotalItems = async () => {
     let btn = await buttonShowMore();
     if (btn) {
+        scrollToBottom();
+        await new Promise(resolve => setTimeout(resolve, 3000));
         await loadTotalItems();
     } else {
         console.log("🛒 Todos los items cargados");
     }
 };
-
 
 chrome.runtime.onConnect.addListener(function (port) {
     port.onMessage.addListener(async ({ cmd }) => {
