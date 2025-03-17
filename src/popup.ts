@@ -1,8 +1,10 @@
-import { getPortActiveTab } from './utils/helperFunctions'
+import { getPortActiveTab, load_complete } from './utils/helperFunctions'
+import { DataWong,Category } from './utils/wong'
 
-const btnScrapingTab = document.getElementById('btn-scraping-tab')
+const btnScrapingTab = document.getElementById('btn-scraping-tab')  //btn-scraping-tab
 const btnScrapingBg = document.getElementById('btn-scraping-background')
 const btnScrapingData = document.getElementById('btn-scraping-data')
+let category= document.getElementById("wong-category") as HTMLElement;
 
 function addRow({ description }:{description:string}) {
     const tableBody = document.getElementById('tableBody')
@@ -16,36 +18,56 @@ function addRow({ description }:{description:string}) {
     tableBody?.appendChild(newRow)
 }
 
+
+
+
+//bgScraping
 if(btnScrapingBg) {
     btnScrapingBg.addEventListener('click',
         async()=>{
-            const portBackground = chrome.runtime.connect({name: "background"});
+          
+          
+            const portBackground = chrome.runtime.connect({name:"background"});
             portBackground.postMessage({ cmd: "getItems" });
+            
         })
 }
 
+// get data from local storage
 if(btnScrapingData) {
     btnScrapingData.addEventListener('click',
         async()=>{
             const portBackground = chrome.runtime.connect({name: "background"});
-            portBackground?.onMessage.addListener( async ({ success, message, data}: { success: boolean; message: string; data: any })=> {
+            portBackground?.onMessage.addListener( async ({ success, message, data}: { success: boolean; message: string; data:{items:Category[]}})=> {
                 if (!success) return
-                data.items.forEach((element:string) => {
-                    addRow({ description: element })
+
+                data.items.forEach((element:Category) => {
+                   addRow({ description: JSON.stringify(element) })
+                  
                 });
             });
             portBackground.postMessage({ cmd: "getPopupItems" });
         })
 }
 
+
+//isnt save in local storage and porname is content-port-script
 if(btnScrapingTab) {
     btnScrapingTab.addEventListener('click',
         async()=>{
             const portTab = await getPortActiveTab()
-            portTab?.onMessage.addListener( async ({ success, message, data}: { success: boolean; message: string; data: any })=> {
+        
+            portTab?.onMessage.addListener( async ({ success, message, data}: { success: boolean; message: string; data:DataWong })=> {
                 if (!success) return
-                data.forEach((element:string) => {
-                    addRow({ description: element })
+                
+              
+                if(category)
+                 category.textContent=data.category;
+
+                data.listProducts?.forEach((element:Category) => {
+                   addRow({ description: JSON.stringify(element) })
+                
+                   
                 });
             });
     

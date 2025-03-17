@@ -26,7 +26,8 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'static', to: '.' } // Copia archivos estáticos a dist
+        { from: 'static', to: '.' } ,// Copia archivos estáticos a dist
+        //{ from: './node_modules/tailwindcss/dist/tailwind.js', to: 'tailwind.js' }
       ],
     }),
   ],
