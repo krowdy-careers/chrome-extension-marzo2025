@@ -1,15 +1,16 @@
 import { getItems ,getAllCategoryData} from './utils/wong';
-
+import {load_complete} from './utils/helperFunctions'
 console.log('Estoy en contentScript 2.0')
 
 chrome.runtime.onConnect.addListener(function(port){
 
 
-  //  if (port.name === "content-script-port" || port.name==="background") {
+       
 
 
         port.onMessage.addListener(async ({ cmd }) => {
             if (cmd === "getItems") {
+                // await load_completed();
                 const data = await getAllCategoryData();
                 port.postMessage({ success: true, message: "Items obtenidos", data });
             }
@@ -18,16 +19,5 @@ chrome.runtime.onConnect.addListener(function(port){
         });
     
 
-  /*  if( port.name==="background"){
-
-        port.onMessage.addListener(async ({ cmd }) => {
-            if (cmd === "getItems") {
-                const data = await getAllCategoryData();
-                port.postMessage({ success: true, message: "Items obtenidos", data });
-            }
-
-           
-        });
-    }
-   */
+  
 })
