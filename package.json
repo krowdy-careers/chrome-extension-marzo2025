@@ -5,7 +5,8 @@
   "repository": "git@github.com:krowdycareers/chrome-extension-boilerplate.git",
   "license": "MIT",
   "dependencies": {
-    "@types/chrome": "^0.0.308",
+    "@types/chrome": "^0.0.309",
+    "chrome-types": "^0.1.345",
     "copy-webpack-plugin": "^13.0.0",
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.2",
@@ -15,5 +16,15 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack --mode production --watch"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.3"
   }
 }
