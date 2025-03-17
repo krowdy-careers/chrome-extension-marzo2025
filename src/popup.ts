@@ -1,8 +1,9 @@
-import { getPortActiveTab } from './utils/helperFunctions'
+import { getPortActiveTab, clearLocalStorage } from './utils/helperFunctions'
 
 const btnScrapingTab = document.getElementById('btn-scraping-tab')
 const btnScrapingBg = document.getElementById('btn-scraping-background')
 const btnScrapingData = document.getElementById('btn-scraping-data')
+const btnScrapingDelete = document.getElementById('btn-scraping-delete')
 
 function addRow({ description }:{description:string}) {
     const tableBody = document.getElementById('tableBody')
@@ -15,6 +16,13 @@ function addRow({ description }:{description:string}) {
     newRow.appendChild(descCell)
     tableBody?.appendChild(newRow)
 }
+
+function clearTable() {
+    const tableBody = document.getElementById('tableBody');
+    if (tableBody) {
+      tableBody.innerHTML = '';
+    }
+  }
 
 if(btnScrapingBg) {
     btnScrapingBg.addEventListener('click',
@@ -52,4 +60,17 @@ if(btnScrapingTab) {
     
             portTab?.postMessage({ cmd: "getItems" });
         })
+}
+
+if(btnScrapingDelete) {
+    btnScrapingDelete.addEventListener('click', async () => {
+        try {
+            await clearLocalStorage()
+            console.log("Data eliminada")
+            clearTable()
+        }
+        catch(e) {
+            console.log("Error", e)
+        }
+    })
 }
