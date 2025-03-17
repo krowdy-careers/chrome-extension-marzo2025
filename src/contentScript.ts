@@ -18,8 +18,8 @@ document.addEventListener("click", (event) => {
 
     console.log(target) //<- Scroll en click a cualquier espacio de la página. Cuando hace click en cualquier elemento, lo muestra en consola, pero cuando hace clic en el btn no muestra nada
  
-        setTimeout(() => {
-            window.scrollBy({ top: window.innerHeight * 0.9, left: 0, behavior: "smooth" });
-        }, 5000);
+        // setTimeout(() => {
+        //     window.scrollBy({ top: window.innerHeight * 0.9, left: 0, behavior: "smooth" });
+        // }, 5000);
     
 });
