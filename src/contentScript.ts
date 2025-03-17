@@ -1,13 +1,33 @@
-import { getItems } from './utils/wong';
+import { getItems ,getAllCategoryData} from './utils/wong';
 
 console.log('Estoy en contentScript 2.0')
 
 chrome.runtime.onConnect.addListener(function(port){
-    port.onMessage.addListener(async ({cmd})=>{
-        console.log(cmd)
-        if(cmd == "getItems"){
-            const data = getItems()
-            port.postMessage({success:true,message:"Items obtenidos",data})
-        }
-    } )
+
+
+  //  if (port.name === "content-script-port" || port.name==="background") {
+
+
+        port.onMessage.addListener(async ({ cmd }) => {
+            if (cmd === "getItems") {
+                const data = await getAllCategoryData();
+                port.postMessage({ success: true, message: "Items obtenidos", data });
+            }
+
+           
+        });
+    
+
+  /*  if( port.name==="background"){
+
+        port.onMessage.addListener(async ({ cmd }) => {
+            if (cmd === "getItems") {
+                const data = await getAllCategoryData();
+                port.postMessage({ success: true, message: "Items obtenidos", data });
+            }
+
+           
+        });
+    }
+   */
 })

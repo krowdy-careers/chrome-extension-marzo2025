@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Mi Extensión",
+    "name": "Wong Category Extension",
     "version": "1.0",
-    "description": "Descripción de mi extensión.",
+    "description": "Chrome extension ofr get products of category in wong.",
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
@@ -16,5 +16,8 @@
     "background": {
       "service_worker": "background.js"
     },
-    "permissions":["activeTab","scripting","storage", "tabs"]
+    "permissions":["activeTab","scripting","storage", "tabs"],
+    "host_permissions": [
+      "<all_urls>"
+    ]
   }
