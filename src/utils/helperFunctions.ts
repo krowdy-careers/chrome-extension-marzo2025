@@ -21,8 +21,8 @@ const sleep = (seconds:number)=>{
 
 const getPortActiveTab = async ()=>{
     const [tab] = await chrome.tabs.query({ active: true })
-    if(!tab.id) return
-    const portTab = chrome.tabs.connect(tab.id, { name: "content-script-port" })
+    if(!tab.id) return;
+    const portTab = chrome.tabs.connect(tab.id, { name: "content-script-port",  })
     return portTab
 }
 

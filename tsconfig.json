@@ -4,6 +4,7 @@
       "module": "ES6", // Cambiado de "commonjs" a "ES6"
       "outDir": "./dist",
       "rootDir": "./src",
+      "moduleResolution": "node",
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
