@@ -1,13 +1,22 @@
-import { getItems } from './utils/wong';
+import { getItems } from './utils/metro';
 
-console.log('Estoy en contentScript 2.0')
-
-chrome.runtime.onConnect.addListener(function(port){
-    port.onMessage.addListener(async ({cmd})=>{
-        console.log(cmd)
-        if(cmd == "getItems"){
-            const data = getItems()
-            port.postMessage({success:true,message:"Items obtenidos",data})
+chrome.runtime.onConnect.addListener(function(port) {
+    port.onMessage.addListener(async ({ cmd }) => {
+        if (cmd === "getItems") {
+            try {
+                const data = await getItems(); 
+                port.postMessage({ 
+                    success: true, 
+                    message: "Items obtenidos", 
+                    data 
+                });
+            } catch (error) {
+                port.postMessage({ 
+                    success: false, 
+                    message: "Error al obtener items",
+                    data: null
+                });
+            }
         }
-    } )
-})
+    });
+});
