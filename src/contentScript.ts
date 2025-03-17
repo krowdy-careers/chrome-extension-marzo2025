@@ -6,7 +6,8 @@ chrome.runtime.onConnect.addListener(function(port){
     port.onMessage.addListener(async ({cmd})=>{
         console.log(cmd)
         if(cmd == "getItems"){
-            const data = getItems()
+            const data = await getItems()
+            console.log("La data recibida es: ",data)
             port.postMessage({success:true,message:"Items obtenidos",data})
         }
     } )
