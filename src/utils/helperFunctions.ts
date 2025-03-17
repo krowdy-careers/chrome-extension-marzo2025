@@ -1,10 +1,5 @@
 // src/utils/helperFunctions.ts
 
-/**
- * Capitaliza la primera letra de una cadena.
- * @param texto - La cadena a modificar.
- * @returns La cadena con la primera letra en mayúscula.
- */
 
 
 const sleep = (seconds:number)=>{
