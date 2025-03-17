@@ -50,4 +50,16 @@ const saveObjectInLocalStorage = async function (obj:any) {
     });
   };
 
-export {sleep,getPortActiveTab,getObjectInLocalStorage,saveObjectInLocalStorage} 
+  const clearLocalStorage = async () => {
+    return new Promise<void>((resolve, reject) => {
+      try {
+        chrome.storage.local.clear(() => {
+          resolve()
+        });
+      } catch (ex) {
+        reject(ex)
+      }
+    })
+  }
+
+export {sleep,getPortActiveTab,getObjectInLocalStorage,saveObjectInLocalStorage,clearLocalStorage} 
