@@ -8,6 +8,8 @@ chrome.runtime.onConnect.addListener(async (port) =>{
         portTab?.postMessage({ cmd: "getItems" });
         portTab?.onMessage.addListener( async ({ success,message,data})=> {
             if (!success) console.log(message)
+            
+            //guarda datos usando funcion en utils folder
             await saveObjectInLocalStorage({items:data})
         });
       }

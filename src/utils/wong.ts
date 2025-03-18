@@ -1,5 +1,5 @@
 const getItems = ()=>{
-    const data = [...document.querySelectorAll('.vtex-product-summary-2-x-productBrand')].map(el=> {return (el as HTMLElement )?.innerText})
+    let data = [...document.querySelectorAll('#gallery-layout-container .vtex-product-summary-2-x-productBrand')].map(el=> {return (el as HTMLElement )?.innerText})
     return data
 }
 
