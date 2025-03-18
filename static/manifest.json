@@ -1,20 +1,22 @@
 {
-    "manifest_version": 3,
-    "name": "Mi Extensión",
-    "version": "1.0",
-    "description": "Descripción de mi extensión.",
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["contentScript.js"],
-        "type": "module"
-      }
-    ],
-    "action": {
-    "default_popup": "popup.html"
-    },
-    "background": {
-      "service_worker": "background.js"
-    },
-    "permissions":["activeTab","scripting","storage", "tabs"]
-  }
+  "manifest_version": 3,
+  "name": "Extensión",
+  "version": "1.0",
+  "description": "Descripción de mi extensión.",
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"],
+      "type": "module"
+    }
+  ],
+  
+  "action": {
+  "default_popup": "file_upload.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions":["activeTab","scripting","storage", "tabs"]
+}
